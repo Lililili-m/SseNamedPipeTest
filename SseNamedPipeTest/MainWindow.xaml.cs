@@ -58,7 +58,20 @@ namespace SseNamedPipeTest
 
         private void Client_MessageReceived(object sender, string e)
         {
-            ClientOutputText += $"Client Message {e}";
+            ClientOutputText += $"Client Message \r\n {e}";
+            //_client.SendMessage(str);
+            if (e.Contains("POST"))
+            {
+                int index = e.LastIndexOf("id");
+                string id = e.Substring(index + 4, 36);
+                //Dispatcher.Invoke(() =>
+                //{
+                    var response = $"response: {id}\ndata: {{\"msg\":\"success\"}}\ncode: 200\nversion: 1\n\n";
+                    ClientOutputText += $"Client Send Message \r\n {response}\n\n";
+                    _client.SendMessage(response);
+                //});
+
+            }
         }
 
         private void Client_Connect(object sender, EventArgs e)
@@ -72,7 +85,12 @@ namespace SseNamedPipeTest
         }
 
         private static string str =
-            "request: /v1/udi/service/register\naction: POST\ndata: {\"apis\":[{\"get\":{\"enabled\":true,\"permission\":0},\"link\":\"\",\"notify\":{\"enabled\":true,\"permission\":4},\"set\":{\"enabled\":true,\"permission\":7},\"topic\":\"v1/test/service/interface\"}],\"group\":0,\"version\":2}\nid: b22043ca-062e-4bee-a2ce-f8fc03db8751\ntoken: xZLhFgzpcBENwvdXkoEy3IGH8MZlM-aL5ZwXkyAo9kgxQrha0xHhyhBav58OFQ1hdECHWfo=\nversion: 1\n\n";
+            "request: /v1/udi/service/register\naction: POST\ndata: {\"apis\": [{\"get\": {\"enabled\": false,\"permission\": 0},\"link\": \"\",\"notify\": {\"enabled\": false,\"permission\": 0},\"set\": {\"enabled\": true,\"permission\": 7},\"topic\": \"/v1/service/show\"},{\"get\": {\"enabled\": false,\"permission\": 0},\"link\": \"\",\"notify\": {\"enabled\": false,\"permission\": 0},\"set\": {\"enabled\": true,\"permission\": 7},\"topic\": \"v1/service/button/enable\"}],\"group\": 0,\"version\": 2}\nid: b22043ca-062e-4bee-a2ce-f8fc03db8751\ntoken: xZLhFgzpcBENwvdXkoEy3IGH8MZlM-aL5ZwXkyAo9kgxQrha0xHhyhBav58OFQ1hdECHWfo=\nversion: 1\n\n";
+
+        string test = "{\"apis\": [{\"get\": {\"enabled\": false,\"permission\": 0},\"link\": \"\",\"notify\": {\"enabled\": false,\"permission\": 0},\"set\": {\"enabled\": true,\"permission\": 7},\"topic\": \"/v1/service/show\"},{\"get\": {\"enabled\": false,\"permission\": 0},\"link\": \"\",\"notify\": {\"enabled\": false,\"permission\": 0},\"set\": {\"enabled\": true,\"permission\": 7},\"topic\": \"v1/service/button/enable\"}],\"group\": 0,\"version\": 2}";
+
+        private string response =
+            "response: 4a2861be-c1fd-4e1e-9ea2-11dbada825c6\ndata: {\"msg\":\"success\"}\ncode: 200\nversion: 1";
 
         private void SendButton_OnClick(object sender, RoutedEventArgs e)
         {

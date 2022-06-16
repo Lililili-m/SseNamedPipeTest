@@ -29,6 +29,7 @@ namespace SseNamedPipeTest
             _pipeName = pipeName;
             _isConnected = false;
             _worker = new MessageWorker();
+            NewPipe();
             _backgroundWorker.DoWork += BackgroundWorker_DoWork;
             _backgroundWorker.RunWorkerCompleted += RunWorkerCompleted;
         }
