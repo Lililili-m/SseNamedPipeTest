@@ -1,0 +1,17 @@
+﻿<Window x:Class="SseNamedPipeTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SseNamedPipeTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="800">
+    <StackPanel>
+        <Button x:Name="OpenButton" Content="open" Width="120" Height="30" Margin="0 10 0 10"
+                Click="OpenButton_OnClick"/>
+        <Button x:Name="SendButton" Content="send" Width="120" Height="30" Margin="0 10 0 10"
+                Click="SendButton_OnClick"/>
+        <TextBox Text="{Binding Path=Client1OutputText}" Width="600" Height="300"
+                 TextWrapping="WrapWithOverflow" IsReadOnly="True" />
+    </StackPanel>
+</Window>
